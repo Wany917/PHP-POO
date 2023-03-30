@@ -3,9 +3,9 @@
 class Character
 {
     public function __construct(
-        private float $health,
-        private float $defenseRatio,
-        private int $attackDamages,
+        protected float $health,
+        protected float $defenseRatio,
+        protected int $attackDamages,
     ) {}
 
     public function getHealth()
@@ -35,5 +35,12 @@ class Character
     public function getDefenseRatio()
     {
         return $this->defenseRatio;
+    }
+
+    public function isDamaged(float $damages)
+    {
+        $this->setHealth(
+            $this->getHealth() - ($damages - $damages * $this->getDefenseRatio())
+        );
     }
 }
