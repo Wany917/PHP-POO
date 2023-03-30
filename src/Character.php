@@ -9,7 +9,7 @@ class Character
         protected int $magicDamages,
     ) {}
 
-    public function getHealth()
+    public function getHealth(): float
     {
         return $this->health;
     }
@@ -43,12 +43,28 @@ class Character
         return $this->defenseRatio;
     }
 
-    public function isDamaged(int $physicalDamages, int $magicalDamages)
+    public function attacks(Character $character)
     {
-        $damages = $physicalDamages + $magicalDamages;
+        echo "{$this} attaque {$character} !".PHP_EOL;
+        $character->takesDamagesFrom($this);
+    }
+
+    public function takesDamagesFrom(Character $character)
+    {
+        $damages = $this->takesPhysicalDamagesFrom($character) + $this->takesMagicalDamagesFrom($character);
         $this->setHealth(
-            $this->getHealth() - ($damages - $damages * $this->getDefenseRatio())
+            $this->getHealth() - ($damages * (1 - $this->getDefenseRatio()))
         );
+    }
+
+    protected function takesPhysicalDamagesFrom(Character $character)
+    {
+        return $character->getAttackDamages();
+    }
+
+    protected function takesMagicalDamagesFrom(Character $character)
+    {
+        return $character->getMagicDamages();
     }
 
     public function __toString()

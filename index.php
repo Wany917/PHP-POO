@@ -1,12 +1,14 @@
 <?php
 
+require_once('./functions.php');
+
 require_once('./src/Archer.php');
 require_once('./src/Soldier.php');
 require_once('./src/Wizard.php');
 
 $archer = new Archer(health: 100, defenseRatio: 0.05, attackDamages: 17, magicDamages: 3);
-$soldier = new Soldier(120, 0.25, 20);
-$wizard = new Wizard(health: 90, defenseRatio: 0.1, attackDamages: 4, magicDamages: 15);
+$soldier = new Soldier(130, 0.25, 20);
+$wizard = new Wizard(health: 80, defenseRatio: 0.1, attackDamages: 4, magicDamages: 14);
 
 $queue = [$archer, $soldier, $wizard];
 
@@ -17,20 +19,20 @@ while (count($queue) > 1) {
     $key = array_rand($queue);
     $attackee = $queue[$key];
 
-    echo "{$attacker} attaque {$attackee} !".PHP_EOL;
-    $attackee->isDamaged($attacker->getAttackDamages(), $attacker->getMagicDamages());
+    $attacker->attacks($attackee);
 
-    array_unshift($queue, $attacker);
     if ($attackee->isDead()) {
         unset($queue[$key]);
         echo "{$attackee} est mort".PHP_EOL;
         echo PHP_EOL;
+        array_unshift($queue, $attacker);
         shuffle($queue);
         continue;
     }
     
     echo "{$attackee} a {$attackee->getHealth()} points de vie".PHP_EOL;
     echo PHP_EOL;
+    array_unshift($queue, $attacker);
     shuffle($queue);
 }
 

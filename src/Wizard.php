@@ -16,4 +16,21 @@ class Wizard extends Character
         }
         parent::__construct($health, $defenseRatio, $attackDamages, $magicDamages);
     }
+
+    public function getMagicDamages()
+    {
+        if (chance(10)) {
+            echo "Coup critique !".PHP_EOL;
+            return $this->magicDamages*2;
+        }
+        return parent::getMagicDamages();
+    }
+
+    public function getDefenseRatio()
+    {
+        if (chance(5)) {
+            return $this->defenseRatio + 0.1;
+        }
+        return parent::getDefenseRatio();
+    }
 }

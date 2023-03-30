@@ -16,4 +16,22 @@ class Archer extends Character
         }
         parent::__construct($health, $defenseRatio, $attackDamages, $magicDamages);
     }
+
+    public function getAttackDamages()
+    {
+        if (chance(20)) {
+            echo "Coup critique !".PHP_EOL;
+            return $this->attackDamages*1.2;
+        }
+        return parent::getAttackDamages();
+    }
+
+    public function getDefenseRatio()
+    {
+        if (chance(10)) {
+            echo "Esquive !".PHP_EOL;
+            return 1;
+        }
+        return parent::getDefenseRatio();
+    }
 }
