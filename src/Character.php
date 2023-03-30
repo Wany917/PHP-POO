@@ -6,6 +6,7 @@ class Character
         protected float $health,
         protected float $defenseRatio,
         protected int $attackDamages,
+        protected int $magicDamages,
     ) {}
 
     public function getHealth()
@@ -32,15 +33,26 @@ class Character
         return $this->attackDamages;
     }
 
+    public function getMagicDamages()
+    {
+        return $this->magicDamages;
+    }
+
     public function getDefenseRatio()
     {
         return $this->defenseRatio;
     }
 
-    public function isDamaged(float $damages)
+    public function isDamaged(int $physicalDamages, int $magicalDamages)
     {
+        $damages = $physicalDamages + $magicalDamages;
         $this->setHealth(
             $this->getHealth() - ($damages - $damages * $this->getDefenseRatio())
         );
+    }
+
+    public function __toString()
+    {
+        return static::class;
     }
 }

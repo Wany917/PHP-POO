@@ -2,7 +2,7 @@
 
 require_once('./src/Character.php');
 
-class Archer extends Character
+class Wizard extends Character
 {
     public function __construct(
         float $health,
@@ -11,8 +11,8 @@ class Archer extends Character
         int $magicDamages,
     )
     {
-        if ($magicDamages > $attackDamages) {
-            throw new Exception("The archer cannot have more magic damages than physical damages.");
+        if ($magicDamages < $attackDamages) {
+            throw new Exception("The wizard cannot have more physical damages than magic damages.");
         }
         parent::__construct($health, $defenseRatio, $attackDamages, $magicDamages);
     }
