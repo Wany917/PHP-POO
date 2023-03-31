@@ -1,6 +1,8 @@
 <?php
 
-require_once('./src/Character.php');
+namespace Eliot\Character;
+
+use Exception;
 
 class Wizard extends Character
 {
@@ -17,10 +19,10 @@ class Wizard extends Character
         parent::__construct($health, $defenseRatio, $attackDamages, $magicDamages);
     }
 
-    public function getMagicDamages()
+    public function getMagicDamages(): float
     {
         if (chance(10)) {
-            echo "Coup critique !".PHP_EOL;
+            // echo "Coup critique !".PHP_EOL;
             return $this->magicDamages*2;
         }
         return parent::getMagicDamages();

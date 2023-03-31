@@ -1,6 +1,8 @@
 <?php
 
-require_once('./src/Character.php');
+namespace Eliot\Character;
+
+use Exception;
 
 class Archer extends Character
 {
@@ -17,10 +19,10 @@ class Archer extends Character
         parent::__construct($health, $defenseRatio, $attackDamages, $magicDamages);
     }
 
-    public function getAttackDamages()
+    public function getAttackDamages(): float
     {
         if (chance(20)) {
-            echo "Coup critique !".PHP_EOL;
+            // echo "Coup critique !".PHP_EOL;
             return $this->attackDamages*1.2;
         }
         return parent::getAttackDamages();
@@ -29,7 +31,7 @@ class Archer extends Character
     public function getDefenseRatio()
     {
         if (chance(10)) {
-            echo "Esquive !".PHP_EOL;
+            // echo "Esquive !".PHP_EOL;
             return 1;
         }
         return parent::getDefenseRatio();

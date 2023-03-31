@@ -1,6 +1,6 @@
 <?php
 
-require_once('./src/Character.php');
+namespace Eliot\Character;
 
 class Soldier extends Character
 {
@@ -15,14 +15,14 @@ class Soldier extends Character
 
     protected function takesMagicalDamagesFrom(Character $character)
     {
-        echo "Ce n'est pas très efficace…".PHP_EOL;
+        // echo "Ce n'est pas très efficace…".PHP_EOL;
         return $character->getMagicDamages()*0.8;
     }
 
-    public function getAttackDamages()
+    public function getAttackDamages(): float
     {
         if (chance(10)) {
-            echo "Coup critique !".PHP_EOL;
+            // echo "Coup critique !".PHP_EOL;
             return $this->attackDamages*2;
         }
         return parent::getAttackDamages();

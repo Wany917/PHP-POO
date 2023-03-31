@@ -1,7 +1,18 @@
 <?php
 
-class Character
+namespace Eliot\Character;
+
+use Eliot\Contracts\DealsPhysicalDamages;
+use Eliot\Contracts\DealsMagicDamages;
+use Eliot\HasWeapon;
+use Eliot\Weapon\Weapon;
+
+abstract class Character implements DealsPhysicalDamages, DealsMagicDamages
 {
+    use HasWeapon;
+
+    protected ?Weapon $weapon = null;
+
     public function __construct(
         protected float $health,
         protected float $defenseRatio,
@@ -28,13 +39,19 @@ class Character
         return $this->health == 0;
     }
 
-    public function getAttackDamages()
+    public function getAttackDamages(): float
     {
+        if ($this->hasWeapon()) {
+            return $this->attackDamages + $this->weapon->getAttackDamages();
+        }
         return $this->attackDamages;
     }
 
-    public function getMagicDamages()
+    public function getMagicDamages(): float
     {
+        if ($this->hasWeapon()) {
+            return $this->magicDamages + $this->weapon->getMagicDamages();
+        }
         return $this->magicDamages;
     }
 
@@ -45,10 +62,15 @@ class Character
 
     public function attacks(Character $character)
     {
-        echo "{$this} attaque {$character} !".PHP_EOL;
+        // echo "{$this} attaque {$character}";
+        if ($this->hasWeapon()) {
+        //     echo " avec {$this->weapon}";
+        }
+        // echo " !".PHP_EOL;
+
         $character->takesDamagesFrom($this);
     }
-
+    
     public function takesDamagesFrom(Character $character)
     {
         $damages = $this->takesPhysicalDamagesFrom($character) + $this->takesMagicalDamagesFrom($character);
